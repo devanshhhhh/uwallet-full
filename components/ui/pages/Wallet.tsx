@@ -56,14 +56,13 @@ const columns: ColumnDef<Payment>[] = [
 export default function Wallet() {
   const [userData, setUserData] = useState<UserDataTypes | null>(null);
 
-  const [clicks, setClicks] = useState(0);
   useEffect(() => {
     async function fire() {
       const details: any = await getUserDetails();
       setUserData(details);
     }
     fire();
-  }, [clicks]);
+  }, []);
 
   useInitializeUserData(userData);
   let currAmount: string = "0";

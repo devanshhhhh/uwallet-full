@@ -9,9 +9,12 @@ import {
 import { DataTable } from "@/components/ui/DataTable";
 import { ColumnDef } from "@tanstack/react-table";
 import { P2PList } from "@/components/ui/P2PList";
-import { useSession, signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { getUserDetails } from "@/app/lib/actions/getUserDetails";
+import {
+  useInitializeUserData,
+  UserDataTypes,
+} from "@/app/store/hooks/useInitializeUserData";
+import { useState, useEffect } from "react";
 
 type Payment = {
   amount: String;
@@ -50,15 +53,17 @@ const columns: ColumnDef<Payment>[] = [
 ];
 
 export default function Transactions() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-
+  const [userData, setUserData] = useState<UserDataTypes | null>(null);
   useEffect(() => {
-    if (status === "loading") return;
-    if (!session) {
-      signIn();
+    async function fire() {
+      const details: any = await getUserDetails();
+      setUserData(details);
     }
-  }, [session, status, router]);
+    fire();
+  }, []);
+
+  useInitializeUserData(userData);
+
   const OnRampTransaction: OnRampTransactionTypes[] = useRecoilValue(
     allOnRampTransactionsAtom
   );
