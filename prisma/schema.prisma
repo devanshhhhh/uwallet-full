@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                Int                 @id @default(autoincrement())
+  email             String             @unique
+  firstname         String
+  lastname          String
+  number            String              @unique
+  password          String
+  isVerified        Boolean             @default(false)
+  OnRampTransaction OnRampTransaction[]
+  Balance           Balance[]
+  Outgoing          Outgoing[]
+  Incoming          Incoming[]
+  Verifications     Verifications[]
+}
+
+model Verifications{
+  id                    Int            @id  @default(autoincrement())
+  userId                Int            @unique
+  verificationToken     String?
+  resetToken            String? 
+  user                  User           @relation(fields: [userId], references: [id])
+}
+
+model Outgoing{
+  id            Int           @id @default(autoincrement())
+  status        Status      
+  token         String        @unique   
+  startTime     DateTime
+  userId        Int
+  to          String
+  amount        Int
+  user          User           @relation(fields: [userId], references: [id])
+}
+
+model Incoming{
+  id            Int           @id @default(autoincrement())
+  status        Status      
+  token         String        @unique   
+  startTime     DateTime
+  userId        Int
+  from          String
+  amount        Int
+  user          User           @relation(fields: [userId], references: [id])
+}
+
+model OnRampTransaction {
+  id        Int          @id @default(autoincrement())
+  status    Status
+  token     String       @unique
+  provider  String
+  amount    Int
+  startTime DateTime
+  userId    Int
+  user      User         @relation(fields: [userId], references: [id])
+}
+
+model Balance {
+  id     Int  @id @default(autoincrement())
+  userId Int  @unique
+  amount Int
+  locked Int
+  user   User @relation(fields: [userId], references: [id])
+}
+
+
+enum Status {
+  Success
+  Failure
+  Processing
+}
+

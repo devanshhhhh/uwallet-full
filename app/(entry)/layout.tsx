@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
+import { UsableBeams } from "@/components/ui/usable-beams";
 import { Toaster } from "react-hot-toast";
-import { Providers } from "./providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -16,12 +16,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Providers>
-        <body className={`${inter.className} `}>
+      <body className={inter.className}>
+        <div></div>
+        <div className="flex flex-row">
           <Toaster />
-          {children}
-        </body>
-      </Providers>
+          <div className="h-screen w-screen bg-slate-600 hidden xl:flex">
+            <UsableBeams />
+          </div>
+          <div className="w-screen">{children}</div>
+        </div>
+      </body>
     </html>
   );
 }
