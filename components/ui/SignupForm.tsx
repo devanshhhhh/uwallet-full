@@ -143,7 +143,7 @@ export default function SignupForm() {
                     />
                   </FormControl>
                   <FormDescription>
-                    We'll never share your phone with anyone else.
+                    We&apos;ll never share your phone with anyone else.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

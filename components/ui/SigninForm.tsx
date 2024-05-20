@@ -88,7 +88,7 @@ export default function SigninForm() {
                   />
                 </FormControl>
                 <FormDescription>
-                  We'll never share your phone with anyone else.
+                  We&apos;ll never share your phone with anyone else.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -130,7 +130,7 @@ export default function SigninForm() {
         </a>
       </span>
       <span className="flex flex-row mt-2 gap-1">
-        <p className="text-xs">Don't have an account?</p>
+        <p className="text-xs">Don&apos;t have an account?</p>
         <a href="/signup" className="underline text-xs">
           Sign up
         </a>
